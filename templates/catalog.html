@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Guidebook{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/Guidebook.css' %}" />
+<link rel="stylesheet" href="{% static 'css/more_button.css' %}" />
+
+
+
+
+<div class="guide_attract">
+<section class= "section1">
+<div class = "img_attractions">
+
+  {%for game in products %}
+
+   <div class = "guide_all_images">
+     <div class = "guide_all_image">
+     <img src="{{game.image.url}}" width = "400" height="250" >
+     <div class="text_guide">
+       <p class = "text-guide1">{{game.name}}</p>
+     </div>
+   </div>
+   </div>
+
+ {% endfor %}
+  </div>
+
+  <div class="button__more">
+  	<button id ="btnMore">Load more</button></div>
+</section>
+
+<section>
+  <p>Categories</p>
+  <a href="{% url 'catalog'  %}"><p>All</p></a>
+  {%for category in categories %}
+   <a href="{% url 'filter' category.slug %}"><p>{{ category.name}}</p></a>
+  {% endfor %}
+</section>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="{% static 'js/more_guide.js' %}"></script>
+    <script src="{% static 'js/jquery.vide.js' %}"></script>
+
+{% endblock %}

@@ -8,5 +8,7 @@ from account import views as v_a
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name ="home.html"), name='home'),
+    path('catalog/', v.product_list, name='catalog'),
+    path('catalog/<slug>', v.product_list, name='filter'),
     #path('', v.HomeView.as_view(), name='home'),
 ]
