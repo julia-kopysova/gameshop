@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/account.css' %}"> <!-- account page-->
+<link rel="stylesheet" href="{% static 'css/buy1.css' %}"> <!-- account page-->
+
+<article>
+<div class = "main__greeting">
+<section>
+<div class = "greeting"><h2>Hello, {{ user.first_name }}!</h2><br/>
+	<p>This is your account. Here you can issue tickets, view and change information about yourself, see the number of tickets purchased, and so on.</p>
+</div>
+
+</section>
+
+<aside>
+<div class = "account" >
+
+		<div class = "name__account surname__account" >{{ user.first_name }} {{ user.last_name }}</div>
+		<div class="username__account">@{{ user.username }}	</div>
+<div class="infor__account">
+
+	<div class="email__account"><p>{{ user.email }}<p></div>
+</div>
+<a class="gradient-btn_account"  href="{% url 'edit_account' %}">Edit</a>
+	<a class="gradient_btn_account"  href="{% url 'edit_account' %}">Edit</a>
+<a href="{% url 'logout' %}" class=" btn">Log Out</a>
+</div>
+</aside>
+
+</div>
+
+
+
+</article>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+	<script src="{% static 'js/script.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+	<script>
+
+	function viewDiv(){
+	  document.getElementById("text__history").style.display = "flex";
+	};
+
+	  </script>
+{% endblock %}

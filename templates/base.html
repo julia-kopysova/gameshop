@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Domine&display=swap" rel="stylesheet"> <!--Font All pages-->
+  <meta  charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style_button.css' %}"> <!--Button All pages-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"> <!--Font All pages-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"> <!--All pages-->
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script> <!--Menu All pages-->
+
+
+      <title>Shocard</title>
+        </head>
+        <body>
+  <header>
+      <div class = "container">
+      <a href="{% url 'home' %}" ><img src="{% static 'images/logo.png' %}" height="80" alt="Логотип" class="header__logo" /></a>
+      <div class="menu">
+          <div class="icon-close">
+          <img src="{% static 'images/x.png' %}" height="30">
+
+        	</div>
+          	  <nav>
+                {% if user.is_authenticated %}
+                <a href="{% url 'account' %}" class=" btn">Account</a>
+                {% else %}
+                <a href="{% url 'login' %}" class=" btn">Log In</a>
+                {% endif %}
+          		</nav>
+          </div>
+          	<div class="icon-menu">
+          		<img src="{% static 'images/Hamburger.png' %}" height="40" ></div>
+
+</header>
+          </div>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+</div>
+
+    <footer>
+
+      <div class = "title__logo">GameShop</div>
+<div class = "info">
+<div class = "mail">Ukraine~Kharkiv</div>
+<div class = "mail">E-mail: game@gmail.com</div>
+<div class = "number">(050)022 4468</div>
+<div class = "number">(099)131 1464</div></div>
+
+	 <nav class = "nav">
+
+		</nav>
+<div class ="social">
+<div><img src="{% static 'images/facebook-pink.png' %}" width="50" height="50" alt="Логотип"/> </div>
+<div><img src="{% static 'images/instagram-pink.png ' %}" width="50" height="50" alt="Логотип"/>  </div>
+<div><img src="{% static 'images/twitter-pink.png' %} " width="50" height="50" alt="Логотип"/> </div>
+<div><img src="{% static 'images/youtube-pink.png' %} " width="50" height="50" alt="Логотип"/> </div></div>
+
+	</footer>
+  <script src="{% static 'js/jquery.bxslider.js' %}"></script>
+  <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
+    <script src="{% static 'js/new.js' %}"></script> <!--Menu All pages-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  	<script src="{% static 'js/menu.js' %}"></script>
+    <script src="{% static 'js/script_slider.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'js/open.js' %}"></script><!--FAQ
+
+    <script src="{% static 'js/script_price.js' %}"></script><!--Prices
+    <script src="{% static 'js/more.js' %}"></script><!--Prices
+  -->
+</body>
+</html>
