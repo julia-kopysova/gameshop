@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %}Guidebook{% endblock %}
+{% block title %}Catalog{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/Guidebook.css' %}" />
@@ -16,7 +16,7 @@
 <div class = "img_attractions">
 
   {%for game in products %}
-
+<a href="{{game.get_absolute_url}}">
    <div class = "guide_all_images">
      <div class = "guide_all_image">
      <img src="{{game.image.url}}" width = "400" height="250" >
@@ -25,7 +25,7 @@
      </div>
    </div>
    </div>
-
+</a>
  {% endfor %}
   </div>
 

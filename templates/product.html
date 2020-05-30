@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+
+
+{{product.name}}
+<img src="{{product.image.url}}" width = "400" height="250">
+{{product.description}}
+{% endblock %}
