@@ -1,0 +1,199 @@
+From eed0cde519cb5da333b00dcd85bfd52eb225d28a Mon Sep 17 00:00:00 2001
+From: Julia Kopysova <julykopysova97@gmail.com>
+Date: Sun, 31 May 2020 20:51:25 +0300
+Subject: [PATCH] Full cart
+
+---
+ cart/__pycache__/views.cpython-38.pyc | Bin 1315 -> 1706 bytes
+ cart/views.py                         |  19 ++++++++++
+ templates/basket.html                 |  52 ++++++++++++++++++++++++--
+ templates/product.html                |  41 +++++++++++++++++++-
+ 4 files changed, 108 insertions(+), 4 deletions(-)
+
+diff --git a/cart/__pycache__/views.cpython-38.pyc b/cart/__pycache__/views.cpython-38.pyc
+index fd900b9b1466bfcf3bcc09b06a80f6edaefc04af..a1d488371b848bc5b4bbf5838d62db62b3ab22b4 100644
+GIT binary patch
+delta 980
+zcmZ8fPfrs;6yKTs)1_=nftEsoL4rn0lg1B##)$GKnsPudO|-6kLs{JJ!psx{Dd_>O
+z#*mFS4j51BCou8gcknhR6Hg|708i+f1p_k4zBlhT@87=Pd!PN7t3Ju)vId^FzrH>5
+z9K-mbjf=-d<1T*U%VBl34+glQ*YHxEJJb0_9&8wZEX!{U!Qc@M2n@6dc#u1ykUugT
+z1?FuGACIuYJ3<U*!w?h>jD6A=g<%*uFd9V|g(B(_lwb_?7`UrOrTkMjQX$IWECR+W
+z=Hch(eqCi+aU|l9?Uus0-43F5ZB=sScb5DJLUg0bZiT)O$`L89tmXQ`3c~LCsfSQ@
+z$hKKnF;!-paS_B3&toZN@i>;r1UV$d<P(9(Q3QEei?Q^1E#@6XTkyf)Q%RLRAmhmv
+zy+WpwH}s)1k~$~f>9u>4`ucw`pVC+=uHsD%wtOy|oOR-Db{zrXqA-X{Jd!1RCRs3V
+z_jTop$@Po=CFXN(YKZc*K-$=)v_q#En|>HJb%iSW3*<FT?Gmm_wTQOQj!vjKp2trt
+zp^!!oso5hv(!Xy!o!z67^eB)C11Oltr}bLf_M9Q<v8itphGuoklUC0F2QobpkbM*R
+zbL+f_2_Iv>TJsVLWHS>)feiexQS5GlFIjV|>qjz>J54>_-N6^Wc*$gKUG_U+I{b>A
+zj(`tfyvm$$uB;$Jf2wnu=kq{Vvd-mUd+D$t5SyXDa|=U6y7V}0myDAF;j=nTSruTz
+zkJ@oftjAool2_IeDJNg8QvZf7o&UFPxPNOwTbW`f-7$!}Qe_^kEG{nB7nO7NnuVYx
+z=TlEUjp2Mo3qAj|+JzR+m%^Rv#Lx}d9nFxaq3}o%H{zy;!ox;giic2QomhWp#v=5@
+O`t9UA#Im02xb|OcXW}FP
+
+delta 600
+zcmZ8e%}V4z5bo|wLd+zS5k^$}J?v#x@Z?cN1W$qp;>CkQHWhW;%tos-;w}Ro)CU;z
+z2%Z#t1)o9ima9j708e67&w@YI<g4yV_4id(-v-y-+;$Lng6!?-are~{;)xHRjbdVj
+zK7HDs+xnT<;KI;_IF~y<cu>6%I|29*kgq`vLh>Qhw?uQe|8iX1%f9rBO$C!xV!)80
+zMo?DvGVGKph8uyS#e-U#aap24Ae1Y8=}A{QgZ1WEI9@DR>kb!+VR32wSmjLoN{XW#
+zGcZQGvKmL2w=n5sC&>r}G)oBLWp<n>o~@-eSJbqS|CDx|CJ`d{d!x_@n1a92h6Bb{
+zl%_3Kn4o;^5HPhXahi6q<nw=1<n60U<1Cjw0TNVCw&l4+GqN`RReweLcaqN^<ek*a
+zr>RUe$hUBc;hVm1+Jd$|N~6ECl%OjFERHkeH=6ab4u{d7{cK(zWSGa@TpPCH&Rzl2
+w(V$&^0*ym-2gez>5mUY4`6T->Qg^YFK{rj7xj*w-zHHDu%~DEwzU#R5J2fh9M*si-
+
+diff --git a/cart/views.py b/cart/views.py
+index d118620..f7b91f3 100644
+--- a/cart/views.py
++++ b/cart/views.py
+@@ -4,6 +4,22 @@ from django.views.decorators.http import require_POST
+ from main.models import Product
+ from .cart import Cart
+ from .forms import CartAddProductForm
++import logging, logging.config
++import sys
++LOGGING = {
++    'version': 1,
++    'handlers': {
++        'console': {
++            'class': 'logging.StreamHandler',
++            'stream': sys.stdout,
++        }
++    },
++    'root': {
++        'handlers': ['console'],
++        'level': 'INFO'
++    }
++    }
++logging.config.dictConfig(LOGGING)
+ 
+ @require_POST
+ def cart_add(request, id):
+@@ -31,4 +47,7 @@ def remove_all_cart(request):
+ 
+ def cart_display(request):
+     cart = Cart(request)
++    for item in cart:
++        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
++        logging.info(item['update_quantity_form'])
+     return render(request,'basket.html', {'cart': cart})
+diff --git a/templates/basket.html b/templates/basket.html
+index 809f9de..ab78f70 100644
+--- a/templates/basket.html
++++ b/templates/basket.html
+@@ -27,14 +27,60 @@
+ 				<div class = "person__name__information">Game:</div>
+         <a href="{{ product.get_absolute_url }}">
+ 				<div class = "name">{{product.name}}</div> </a>
+-{% endwith %}
++        <div class = "person__surname__information">Unit price:</div>
++        <div class = "surname">{{item.price}}</div>
+ 				<div class = "person__surname__information">Price:</div>
+-				<div class = "surname">{{item.price}}</div>
++				<div class = "surname">{{item.total_price}}</div>
+ 			</div>
+ 
+ 	<div class = "date__information">
+ 		<div class = "date__start__information">Quantity:</div>
+-		<div class = "start__date">{{item.quantity}}</div>
++    <div class = "surname">{{item.quantity}}</div>
++    <form action="{% url 'add' product.id %}" method="post">
++    <select name="quantity" id="id_quantity">
++        <option value="1">1</option>
++
++        <option value="2">2</option>
++
++        <option value="3">3</option>
++
++        <option value="4">4</option>
++
++        <option value="5">5</option>
++
++        <option value="6">6</option>
++
++        <option value="7">7</option>
++
++        <option value="8">8</option>
++
++        <option value="9">9</option>
++
++        <option value="10">10</option>
++
++        <option value="11">11</option>
++
++        <option value="12">12</option>
++
++        <option value="13">13</option>
++
++        <option value="14">14</option>
++
++        <option value="15">15</option>
++
++        <option value="16">16</option>
++
++        <option value="17">17</option>
++
++        <option value="18">18</option>
++
++        <option value="19">19</option>
++
++      </select><input type="hidden" name="update" value="True" id="id_update">
++  <input type="submit" value="Update">
++  {% csrf_token %}
++</form>
++{% endwith %}
+ 		<div class = "finish__date"></div>
+ 	</div>
+ 	</div>
+diff --git a/templates/product.html b/templates/product.html
+index 6107779..c7c7ad3 100644
+--- a/templates/product.html
++++ b/templates/product.html
+@@ -12,7 +12,46 @@
+ {{product.description}}
+ <p>$ {{ product.price }}</p>
+ <form action="{% url 'add' product.id %}" method="post">
+-  {{ cart_form }}
++  <label for="id_quantity">Quantity:</label>
++  <select name="quantity" id="id_quantity">
++  <option value="1">1</option>
++
++  <option value="2">2</option>
++
++  <option value="3">3</option>
++
++  <option value="4">4</option>
++
++  <option value="5">5</option>
++
++  <option value="6" >6</option>
++
++  <option value="7">7</option>
++
++  <option value="8">8</option>
++
++  <option value="9">9</option>
++
++  <option value="10">10</option>
++
++  <option value="11">11</option>
++
++  <option value="12">12</option>
++
++  <option value="13">13</option>
++
++  <option value="14">14</option>
++
++  <option value="15">15</option>
++
++  <option value="16">16</option>
++
++  <option value="17">17</option>
++
++  <option value="18">18</option>
++
++  <option value="19">19</option>
++
+   {% csrf_token %}
+   <input type="submit" value="Add to cart">
+ </form>
+-- 
+2.24.1.windows.2
+

@@ -1,0 +1,449 @@
+From 28b7cf219f2d04964c1ed0facb1c58faa7ed38ca Mon Sep 17 00:00:00 2001
+From: Julia Kopysova <julykopysova97@gmail.com>
+Date: Sun, 31 May 2020 20:09:00 +0300
+Subject: [PATCH] Cart - without update quantity of items in basket
+
+---
+ cart/__pycache__/cart.cpython-38.pyc     | Bin 0 -> 2426 bytes
+ cart/__pycache__/forms.cpython-38.pyc    | Bin 0 -> 702 bytes
+ cart/__pycache__/urls.cpython-38.pyc     | Bin 0 -> 653 bytes
+ cart/__pycache__/views.cpython-38.pyc    | Bin 0 -> 1315 bytes
+ cart/cart.py                             |  61 +++++++++++++++++++
+ cart/forms.py                            |   7 +++
+ cart/urls.py                             |  14 +++++
+ cart/views.py                            |  33 ++++++++++-
+ gameshop/__pycache__/urls.cpython-38.pyc | Bin 1257 -> 1316 bytes
+ gameshop/urls.py                         |   2 +
+ main/__pycache__/views.cpython-38.pyc    | Bin 948 -> 1048 bytes
+ main/views.py                            |   4 +-
+ templates/base.html                      |   3 +
+ templates/basket.html                    |  71 +++++++++++++++++++++++
+ templates/product.html                   |   7 +++
+ 15 files changed, 200 insertions(+), 2 deletions(-)
+ create mode 100644 cart/__pycache__/cart.cpython-38.pyc
+ create mode 100644 cart/__pycache__/forms.cpython-38.pyc
+ create mode 100644 cart/__pycache__/urls.cpython-38.pyc
+ create mode 100644 cart/__pycache__/views.cpython-38.pyc
+ create mode 100644 cart/cart.py
+ create mode 100644 cart/forms.py
+ create mode 100644 cart/urls.py
+ create mode 100644 templates/basket.html
+
+diff --git a/cart/__pycache__/cart.cpython-38.pyc b/cart/__pycache__/cart.cpython-38.pyc
+new file mode 100644
+index 0000000000000000000000000000000000000000..4d892529d84f423a25ed1cc85cbee67695fa44c4
+GIT binary patch
+literal 2426
+zcmZ`*$!;4*5bb3)k(4FdvTQj{5CjICF%o8Rj4Y4^2U2YK!UUo110iQJW{;GihKss~
+zMkG)t`kFt;!8-bTa_d`=lYb$HAg`LFHp@eFb@eh`)vsRF@X7pqh2gpP_g}x<i5UBb
+z1}7g6gZpUa8wkY|FIbniI44~cqAOd{>9X*;e#__VAyc06Uoz!q!C1CJ6*O5KzQNn<
+zHMikL*3P?W5px@vtSs~1wt*i0r2A^vF59&2<RdY-k7k}iWUR#%YYD}bc*$B)Eh}FI
+zFL}#Tp^7l$t2tFcAE>ITp%2x(x_~}X3u+PloVutkp|7aRY6*Q+U4e5~t+$@)vMpd@
+z_K;m_>uBaHh!O9w5lhfI>=iFXM;`J6F%sr>&O8PU^EA84M$i*au_o@@h<zKH%$U62
+zvvNBtHQ{L&*1!Mxank&u*?jb4BYCu8y*3<(rS(i!Y}rs}yTi<sx{A%OnZAJT-@EJI
+zZ9XxXHk)PE9elC5k(r&cKiGVjcC+ShP`05MQs^uv>VrKSB}v}P%OnYLh;gyz5x>Aa
+zzR36I>E89(jyD`z9<<5B+2cc@v4i1PC?x^G$Naz>dAPFJ3H5Eo-K-oVEPoOZV&nk^
+zsn-Y!8m%w|V0z2PBcH7RsIP%BcCuIAAtM$c7+yn@8?ms_?lA3@dAVo(fzI2RzC`oB
+zl>o+yTsd^~WlRFL^hFl?x<-R=FyWHhZx@CGm6lm@bXaA&oZtikb|Mz&O_?f1Q-&-t
+zUf~rXc=TUQ0xYr2_ag@vHnqvc*+cpfRjy-zTT*i*Sw+T>J|%=`JcgSTR*ht1jt!cE
+zVxw+f<y(2CUUPSiGrs9%Y@)-B3l9RgKj*xmo4>_eVzLX_$54(!2DVZFb^?8q`jNOt
+z(90S0nivv$dI_DrLc;k;hGRML=_<{xkT`=}ptElOMfL%f3|-8D2cGR$os*N*w@^EB
+zlMsNLz-i2zY~qNpvdDT9AKu6MTPD+Pf7mN;V#&D7of(_VpE5=?rq-s-B?L?%ix1g>
+z3sT1$amD{|`MklNT|1B?Njpk^Bs;;FgT7*w?cQ*2g@+7#>IYsKjXWh+*qBof8oLoB
+z=)OcFpXQ!|*t_=~wSz{?TS2ZU-?W30$m?j@s+RpSEfPocc+TD0dOO*k(d4%c`_DUB
+zyEHb~%8N47$3e2ei?l$o&_uy$3bd-n95*(a4ve#Dd43j2DiJs{Np9f?vk1XN1q_S$
+zGUOs(I#DRxzEju|{f|n-H4I8np6WA&^OYd9#xAU}Y@B+Lf<`YIY9B$2*t6>h2r7(1
+zbpWgg3PI^06iT2vNSE&pvWBJuP$xwFbL-&(-Lv<aTiwoj+3y3rc85%mEsqJdf6H+a
+z#W*<udVRI%x6{I`)sNmnJ(gzJoluZ?rqAQy!kL4<BwJHLE}duT6bOVKZFbp8spfdc
+zJIGB}I9MWyJNi8=AvaGK4SfT%=Q`!Li!9Z5u{^C86~13_&bWnlyFevomWhh*2z`lg
+zSIA07VcB@_7?69<`~BkGsp;bbRqlOD)&mGepBpi?@0J>|&=;}rAg<8|s)sLElGsX;
+zpa>2N(rXD->|(N_iIbXKb7fFdnb9ATAjaxXNPJ4-GZM$8$!S#CHMv2}RrZKSVWk#%
+zQ4q<fisrfXMjY8tP5z#^Y_e6=NqgJ<db{7-ntZsc-8Apj;bm4#Gc%ZEraR$0(>7Y2
+OTxyL%?eM5^{N(@AlHjiZ
+
+literal 0
+HcmV?d00001
+
+diff --git a/cart/__pycache__/forms.cpython-38.pyc b/cart/__pycache__/forms.cpython-38.pyc
+new file mode 100644
+index 0000000000000000000000000000000000000000..dd4626d41e207d576603b6a3a672a483daf846d8
+GIT binary patch
+literal 702
+zcmZuu%W4}j6qPidM{K8rl0trApoEq}7A1tF<2vysNo#x2soP<gt2lDzWl5$O+?BJ<
+zqMy<4DRiN2SN?^rdNqbVpcn4pTs@BNJsR)swh6}j@83SYpoILe#oy7w;uKRIApilI
+zlY+*S5@6um6V9Lo?wa+;n#RsK0T29p0zRj+*4l|(2!<rw+2CCgQsdrKvQQbm^E((a
+z7c;_C2MANLA|LiX(-qZZMc4F(ePQ#~kbJcQj?yw@h8;dLR7eMpH}LZ)dN~;@F4aWy
+zqJBQ<adoGwdUBo?e0YmwibPqGrBY9tHV*5hX&>i8>8vX16Dy|dv>stZ21qux&&@tU
+zhWSs}j!!YwQv^<83M6LSnYFmfJ)jRP_OS}kBfGi-&Vv)T0jCIE^Ekp5&H%1u1&d7g
+z(GncV&u%M`ab>)$;xgm?&@qAJ^M#Ncj4w)|MVcG$lYlALmtn^QNmAleNn+YbQlM6D
+zc{fSsi!|TvNb9cI8!c-NQKR1%JO^`d{r0Lijz-Cw@!92QFnX6n7gvMm_0Tw?)FwcM
+zQVYE_-B(qW^R(Pv>s$x`UJlB7p^dkwA=UiPCv2IIFUk&rwW#qkppR&?av6HYgIQWm
+it8HVhM9$?C+hoi7&>Z`pq6v<-6Q0;VX=J->pZx;SUaal_
+
+literal 0
+HcmV?d00001
+
+diff --git a/cart/__pycache__/urls.cpython-38.pyc b/cart/__pycache__/urls.cpython-38.pyc
+new file mode 100644
+index 0000000000000000000000000000000000000000..32404d0d6be8f6f6f4f07afbc67d171c1ad6f973
+GIT binary patch
+literal 653
+zcmYjO&5qMB5VjMy`Rm{EqkV>6T5;flRuzav2nkqemtL%hDyoNWik(EZThzY8-gpV#
+zg&Q|tIqfST4vdouu;rQWo5{rAjF-b<N^pI5KRzx3LVkMk|B8`3$78;t5kyc)6y;O}
+zJfNNjGE|H+#Gzoar}{i<<2@OxgeNU#GR1gC2~g38Y&#H<i0?vV2}IkWNKY(7HWGsq
+z8zLKvk!KsmColm9$@UD-12Mh}&IzB0$qkvF-J>!x4IFC<d+VaITFae)DRq5g3tO)5
+zsn1i_+n4agAczfETUHx$jMZVaF0`FH<{jo(RVX;dg%I<LQY>7E=$L6x^&YxNzaz&?
+zfCLMxLdrQ${}KGjP}J+4g37LRUEBB5hb|M_qT1B6ot8%9oQV$6xbstZU00vl+^mzV
+zna>j4_m1xWmizB?<jeiL@U-oy?SKz_11nLQMivJiw+yxOtVNw>KJL8N+*Y{^1>x8%
+z=*qa{-K)ztFILOzw=V7A_0`pfZ$v-#H+u8y>C0#N(ttL(1=T#sFTs4ab(6owsomTn
+m*dQ<-_-k|D?yNbu_(IiUCt=~A!aPDVp@VLRBiioYEcydG+PZxJ
+
+literal 0
+HcmV?d00001
+
+diff --git a/cart/__pycache__/views.cpython-38.pyc b/cart/__pycache__/views.cpython-38.pyc
+new file mode 100644
+index 0000000000000000000000000000000000000000..fd900b9b1466bfcf3bcc09b06a80f6edaefc04af
+GIT binary patch
+literal 1315
+zcmZvb&2G~`5Xbk!cAUg*S_FcM&l6HE6-bB!LI_j@7Zi{R7c0Uto~2E&<8*gZC~{Bb
+z$~&~jJ`cCOa^ejT2gJ;}pi;24v*X$I`ZqIwzgk-AF}!|${qp*|Wb7+FoW3x|9^x<`
+z&;SEovWlmilP_Ao5~-+UDt%0rK^3N<_k%L3I%x;}5TY`!x@p(@ow8T;(>`Y^gc!P?
+z*a1%y=t2JzOP3&lC7hRG83s5HU}cjHSHI!c*^s+Ps~IRglv-fG#ah8ctHQd~EoHO%
+z%@qBt*4dp~cW`&2)y@Lfvlq`dU*dD;g|1;y*l)Z&E!fDl#rQdz9|4>!KdE(9(D}cw
+z2%Qke1`hKKjb#l&?+eSVXgKiCVqaR>uxWtNpa~AcBc>lW!8F<r8!_!PvI#+~F|=}x
+zLGT%iWn%~rI3^d3j=2*PaPiI}pV^7sbJ1cBxm82yI`bA;C-~WP(8jYr8-s!}=;|0(
+zbwGw#br+2bC~Fr_OtzbsczjZnDxWFH@aWvh96(cdhmq@0os_Y<PcIM1Ec+AQVkMj?
+z;F#%)82E8_<KFm{QQC~Hs^+)HkCl06>-qR;Ua8G(bhgkj<Pg_*ccR{#_4%HQ=`q7E
+z5~n$jhKZObyvJi6wfE0R>NSl2Rd~vXhA;e0bpBWPMjXmU9-$^}0K%74jx@>Ir!oxB
+zREI=V)w`<AKG1}7CUc){YcAoc>wEt8wF?+9lm|n2N<m*nzaUBdzDPSXJT@J0g3TL#
+z$d4F;3g8}8j9NzN8C^&%(jM$sv|zp)RQyvogO()A%Q7P}0x;BgLW;S*hTcCwe*}CQ
+z$npmNX+RNA_<=+*%F)OEo7}upc75AcWlJa83Q|h?Dw#7pi7yXK%)HF^Zr}z(O(Ph6
+z9p}+-#jU_JpKaCaC=P9lg*E;M_L+L!rdLijw3-1`)H=7dHi%*8n&8uZl}~2tRSl{%
+zt<HUMs246IsTwbQFC*U+UkHzIirBOJuEzKAtVO9FQ184d6Mi0B>Te-<FNvc#`~}gC
+B84dsd
+
+literal 0
+HcmV?d00001
+
+diff --git a/cart/cart.py b/cart/cart.py
+new file mode 100644
+index 0000000..54a0bc2
+--- /dev/null
++++ b/cart/cart.py
+@@ -0,0 +1,61 @@
++from decimal import Decimal
++from django.conf import settings
++from main.models import Product
++#from .forms import CartAddItemForm
++
++class Cart(object):
++    def __init__(self, request):
++        self.session = request.session
++        cart = self.session.get(settings.CART_SESSION_ID)
++        if not cart:
++            cart = self.session[settings.CART_SESSION_ID] = {}
++        self.cart = cart
++
++    def add(self, product, quantity=1, update_quantity=False):
++        product_id = str(product.id)
++        if product_id not in self.cart:
++            self.cart[product_id] = {
++                                     'quantity': 0,
++                                     'price': str(product.price),}
++        if update_quantity:
++            self.cart[product_id]['quantity'] = quantity
++        else:
++            self.cart[product_id]['quantity'] += quantity
++        self.save()
++
++    def save(self):
++        self.session[settings.CART_SESSION_ID] = self.cart
++        self.session.modified = True
++
++    def remove(self, product):
++        product_id = str(product.id)
++        if product_id in self.cart:
++            del self.cart[product_id]
++            self.save()
++
++    def amount(self):
++        return len(self.cart)
++
++    def __iter__(self):
++        #будет возвращать данные, по одному элементу за раз.
++        product_ids = self.cart.keys()
++        products = Product.objects.filter(id__in=product_ids)
++        for product in products:
++            self.cart[str(product.id)]['product'] = product
++        for i in self.cart.values():
++            i['price'] = Decimal(i['price'])
++            i['total_price'] = i['price'] * i['quantity']
++            yield i
++
++    def get_total_price(self):
++        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
++
++    def clear(self):
++        del self.session[settings.CART_SESSION_ID]
++        self.session.modified = True
++
++    def empty(self):
++        if bool(self.cart)==False:
++            return True
++        else:
++            return False
+diff --git a/cart/forms.py b/cart/forms.py
+new file mode 100644
+index 0000000..3164641
+--- /dev/null
++++ b/cart/forms.py
+@@ -0,0 +1,7 @@
++from django import forms
++
++PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 20)]
++
++class CartAddProductForm(forms.Form):
++    quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES,coerce=int)
++    update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+diff --git a/cart/urls.py b/cart/urls.py
+new file mode 100644
+index 0000000..e470c9c
+--- /dev/null
++++ b/cart/urls.py
+@@ -0,0 +1,14 @@
++from django.urls import path,include
++from django.conf.urls.static import static
++from . import views as v
++from django.conf import settings
++from cart import views as views_cart
++
++urlpatterns = [
++    path('my_cart/', views_cart.cart_display, name='cart'),
++    path('add/<id>', v.cart_add, name='add'),
++    path('remove/<id>', v.cart_remove, name='remove'),
++    path('delete_all/', v.remove_all_cart, name='delete_all'),
++    #path('', v.HomeView.as_view(), name='home'),
++]
++urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+diff --git a/cart/views.py b/cart/views.py
+index 91ea44a..d118620 100644
+--- a/cart/views.py
++++ b/cart/views.py
+@@ -1,3 +1,34 @@
+ from django.shortcuts import render
++from django.shortcuts import render, redirect, get_object_or_404
++from django.views.decorators.http import require_POST
++from main.models import Product
++from .cart import Cart
++from .forms import CartAddProductForm
+ 
+-# Create your views here.
++@require_POST
++def cart_add(request, id):
++    cart = Cart(request)
++    product = get_object_or_404(Product, id=id)
++    form = CartAddProductForm(request.POST)
++    if form.is_valid():
++        cd = form.cleaned_data
++        cart.add(product=product,
++                 quantity=cd['quantity'],
++                 update_quantity=cd['update'])
++    return redirect('cart')
++
++
++def cart_remove(request, id):
++    cart = Cart(request)
++    product = get_object_or_404(Product, id=id)
++    cart.remove(product)
++    return redirect('cart')
++
++def remove_all_cart(request):
++    cart = Cart(request)
++    cart.clear()
++    return redirect('cart')
++
++def cart_display(request):
++    cart = Cart(request)
++    return render(request,'basket.html', {'cart': cart})
+diff --git a/gameshop/__pycache__/urls.cpython-38.pyc b/gameshop/__pycache__/urls.cpython-38.pyc
+index a05d2e840dbd8bb87020343d0e4e5c1d0fa88645..d7e1d2a02779f94c2b677578ac6f52a8169ab90f 100644
+GIT binary patch
+delta 244
+zcmaFKxr9qQl$V!_0SKh7UXE*EVPJR+;vfSKAjbiSi<eB)4i8FUOyS7k&*h8aV`NBW
+zP2o&sN#SZ{Y-R$oxl@_41hV+RY#yLEFH{`F=7X~NfouT~JDoL3Fhww!K~reso>NTh
+znv6x9KszS4F?)zsu_h-LmFQP-f+)SxqMTwsO`*vbnWrm&1a7euXO^Vi;s%NrB$kw<
+n7UdPMWGE5_YAzC<+{EH5Ck14(@bfSVF!F#QkY<LkfaGrgIvF;u
+
+delta 184
+zcmZ3&^^#LNl$V!_0SL+xFU8rjFfcp@agYH!kmCTv#XS?X!>v+TQ#evtQaGC#o0))Y
+zu2iNh{wzK)n;R(30~H6cc|q)SmMDP~zF-DT{*6~oF-=~|?7{4(DL9#lWx7;xW=ZNT
+v?$V;1g2a-N)S|rNl?+8fK#PimChuhNl@bFoS@?Mv1sHk2P=Fai^ZWq-sKh4M
+
+diff --git a/gameshop/urls.py b/gameshop/urls.py
+index 9d84f48..c03ba2d 100644
+--- a/gameshop/urls.py
++++ b/gameshop/urls.py
+@@ -19,10 +19,12 @@ from django.views.generic.base import TemplateView
+ from django.conf import settings
+ from django.conf.urls.static import static
+ from main import views, urls
++from cart import urls
+ 
+ urlpatterns = [
+     path('', include('main.urls')),
+     path('admin/', admin.site.urls),
+     path('accounts/', include('account.urls')),
+     path('accounts/', include('django.contrib.auth.urls')),
++    path('cart/', include('cart.urls')),
+ ]
+diff --git a/main/__pycache__/views.cpython-38.pyc b/main/__pycache__/views.cpython-38.pyc
+index 8d94a8831794589fadbc8f378246a4de26d8c7c2..7b5ded6278129619598a4b57dedb671b89d9409e 100644
+GIT binary patch
+delta 472
+zcmY*VO-sW-6x_F)Hffrqwe&*;4<ZOb=r0gK3Zj>ys318grLV<8qOw^plF~za5<G-n
+zM7((P?mzLCtAE0yZ__Hc%g%0Q=S}AAhxu%|=dNor8o}4+<s@}CV3_V4ZZRx|<;V#f
+zVCbNQr5OY++E|{kz(ezt`EL4n)AS*$b$U|mBOc3Jyzi@nTN$O_Z{W>e;H2e}vGg=l
+zG*k)RnQY8CKblzd5$ih!2H4;cIy7aAm_FD1au~E1X?1AD+XRYD*_bO(JOKpcPhu>T
+zNEnJlBpi)bJ{6R(&^_~c#z!a}Dtd74775$eDhho*$;>4Yl={@d)sT|=hAfj-7BrX|
+zbP!_e`n*aItmNWlX<j7P^kw4@nsmy%Uj+_SZxq&ui**wWiqxuHXXNff*RRYs#YH!;
+owQE~Ph!+X;E0F4+asG?k-P(=lwZp+4kRsOYRiO@5nvSsTAFM`T2><{9
+
+delta 353
+zcmYk2u}Z{15QcYl@7$PVW5j4w(8?wVzJQ{IjW!3Of}~L7=D<KM%4Thjh=tc$gn-yu
+z+F$8YSmtS*4X3y;-_HKb{Ik37&P=LHrCdg<n0;T%T5UmE@1DdSN_3`>dbo)0l%+l{
+zoU_EQ-->1vK0q~Ja2EU2rj<otu|)V}I%;<KDafYa@$(u<Lr(Zzf|5SPF-5seFw8&&
+z2*_W>6F0nKD6m)Y3|<6H><=yy-tr8!N5vEWLEq!!(Cporao)=LDG}OwYH4Aok+5R(
+zqu6rYBKpHBWo<BTy}^;W&GKc^${vA10D6P=1O|y}w7A;W_7R=-&!n^KoScI(T`3<O
+Q0+p5aD?^ANgiyHd4;&;wv;Y7A
+
+diff --git a/main/views.py b/main/views.py
+index 4685518..613e57b 100644
+--- a/main/views.py
++++ b/main/views.py
+@@ -2,6 +2,7 @@ from django.shortcuts import render,reverse
+ from django.shortcuts import render, redirect, get_object_or_404
+ from .models import Product, Category
+ from django.views.generic import ListView,DetailView
++from cart.forms import CartAddProductForm
+ 
+ 
+ def product_list(request, slug=None):
+@@ -15,5 +16,6 @@ def product_list(request, slug=None):
+ 
+ 
+ def product_detail(request, id):
++    cart_product_form = CartAddProductForm()
+     product = get_object_or_404(Product,id=id,available=True)
+-    return render(request, 'product.html',  {'product': product})
++    return render(request, 'product.html',  {'product': product, 'cart_form':cart_product_form})
+diff --git a/templates/base.html b/templates/base.html
+index d306f4c..3fb671d 100644
+--- a/templates/base.html
++++ b/templates/base.html
+@@ -25,6 +25,9 @@
+         	</div>
+           	  <nav>
+                 <a href="{% url 'catalog' %}" class="nav-link">Catalog</a>
++                {% if user.is_authenticated %}
++          			<a href="{% url 'cart' %}" class="nav-link bag">Basket</a>
++                {% endif %}
+                 {% if user.is_authenticated %}
+                 <a href="{% url 'account' %}" class=" btn">Account</a>
+                 {% else %}
+diff --git a/templates/basket.html b/templates/basket.html
+new file mode 100644
+index 0000000..809f9de
+--- /dev/null
++++ b/templates/basket.html
+@@ -0,0 +1,71 @@
++{% extends 'base.html' %}
++{% load static %}
++
++{% block title %}Basket{% endblock %}
++
++{% block content %}
++
++<link rel="stylesheet" type="text/css" href="{% static 'css/basket.css' %}">  <!--basket page-->
++ <link rel="stylesheet" href="{% static 'css/buy1.css' %}">
++<article>
++  {% if cart.empty == True %}
++<div class="empty_cart">  <h1 class="empty-h">Your basket is empty</h1></div>
++  {% else %}
++<div class="basket">
++
++	<h1>Your basket</h1>
++	<div class="tickets">
++
++{% for item in cart %}
++{% with product=item.product %}
++	    <a href="{% url 'remove' product.id %}"><div class = "close">remove</div></a>
++		<div class="ticket" >
++			<div class = "ticket__infor">
++			<div class = "name_info"></div></div>
++		<div class = "information">
++			<div class = "person__information">
++				<div class = "person__name__information">Game:</div>
++        <a href="{{ product.get_absolute_url }}">
++				<div class = "name">{{product.name}}</div> </a>
++{% endwith %}
++				<div class = "person__surname__information">Price:</div>
++				<div class = "surname">{{item.price}}</div>
++			</div>
++
++	<div class = "date__information">
++		<div class = "date__start__information">Quantity:</div>
++		<div class = "start__date">{{item.quantity}}</div>
++		<div class = "finish__date"></div>
++	</div>
++	</div>
++	<hr/>
++	<div class = "num">
++</div>
++</div>
++
++{% endfor %}
++</div>
++<div class="total__price">
++	<div class="infor__price">Total price: </div>
++	<div class="infor__value__price"> {{cart.get_total_price}}$</div>
++</div>
++</div>
++
++
++
++<div class = "buttons">
++
++
++<a class="gradient-btn_Basket"  href="{% url 'delete_all' %}">Delete all</a>
++<a class="gradient_btn_Basket"  href="{% url 'delete_all' %}">Delete all</a>
++
++<a class="gradient-btn_Basket"  href="{% url 'catalog' %}">Back</a>
++<a class="gradient_btn_Basket"  href="{% url 'catalog' %}">Back</a>
++
++
++
++</div>
++{% endif %}
++</article>
++
++{% endblock %}
+diff --git a/templates/product.html b/templates/product.html
+index ee647eb..6107779 100644
+--- a/templates/product.html
++++ b/templates/product.html
+@@ -10,4 +10,11 @@
+ {{product.name}}
+ <img src="{{product.image.url}}" width = "400" height="250">
+ {{product.description}}
++<p>$ {{ product.price }}</p>
++<form action="{% url 'add' product.id %}" method="post">
++  {{ cart_form }}
++  {% csrf_token %}
++  <input type="submit" value="Add to cart">
++</form>
++
+ {% endblock %}
+-- 
+2.24.1.windows.2
+
