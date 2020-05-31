@@ -2,6 +2,7 @@ from django.shortcuts import render,reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category
 from django.views.generic import ListView,DetailView
+from cart.forms import CartAddProductForm
 
 
 def product_list(request, slug=None):
@@ -15,5 +16,6 @@ def product_list(request, slug=None):
 
 
 def product_detail(request, id):
+    cart_product_form = CartAddProductForm()
     product = get_object_or_404(Product,id=id,available=True)
-    return render(request, 'product.html',  {'product': product})
+    return render(request, 'product.html',  {'product': product, 'cart_form':cart_product_form})

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Basket{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/basket.css' %}">  <!--basket page-->
+ <link rel="stylesheet" href="{% static 'css/buy1.css' %}">
+<article>
+  {% if cart.empty == True %}
+<div class="empty_cart">  <h1 class="empty-h">Your basket is empty</h1></div>
+  {% else %}
+<div class="basket">
+
+	<h1>Your basket</h1>
+	<div class="tickets">
+
+{% for item in cart %}
+{% with product=item.product %}
+	    <a href="{% url 'remove' product.id %}"><div class = "close">remove</div></a>
+		<div class="ticket" >
+			<div class = "ticket__infor">
+			<div class = "name_info"></div></div>
+		<div class = "information">
+			<div class = "person__information">
+				<div class = "person__name__information">Game:</div>
+        <a href="{{ product.get_absolute_url }}">
+				<div class = "name">{{product.name}}</div> </a>
+{% endwith %}
+				<div class = "person__surname__information">Price:</div>
+				<div class = "surname">{{item.price}}</div>
+			</div>
+
+	<div class = "date__information">
+		<div class = "date__start__information">Quantity:</div>
+		<div class = "start__date">{{item.quantity}}</div>
+		<div class = "finish__date"></div>
+	</div>
+	</div>
+	<hr/>
+	<div class = "num">
+</div>
+</div>
+
+{% endfor %}
+</div>
+<div class="total__price">
+	<div class="infor__price">Total price: </div>
+	<div class="infor__value__price"> {{cart.get_total_price}}$</div>
+</div>
+</div>
+
+
+
+<div class = "buttons">
+
+
+<a class="gradient-btn_Basket"  href="{% url 'delete_all' %}">Delete all</a>
+<a class="gradient_btn_Basket"  href="{% url 'delete_all' %}">Delete all</a>
+
+<a class="gradient-btn_Basket"  href="{% url 'catalog' %}">Back</a>
+<a class="gradient_btn_Basket"  href="{% url 'catalog' %}">Back</a>
+
+
+
+</div>
+{% endif %}
+</article>
+
+{% endblock %}

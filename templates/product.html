@@ -10,4 +10,11 @@
 {{product.name}}
 <img src="{{product.image.url}}" width = "400" height="250">
 {{product.description}}
+<p>$ {{ product.price }}</p>
+<form action="{% url 'add' product.id %}" method="post">
+  {{ cart_form }}
+  {% csrf_token %}
+  <input type="submit" value="Add to cart">
+</form>
+
 {% endblock %}

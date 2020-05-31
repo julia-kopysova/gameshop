@@ -19,10 +19,12 @@ from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from main import views, urls
+from cart import urls
 
 urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('account.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('cart/', include('cart.urls')),
 ]
