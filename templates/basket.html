@@ -27,14 +27,60 @@
 				<div class = "person__name__information">Game:</div>
         <a href="{{ product.get_absolute_url }}">
 				<div class = "name">{{product.name}}</div> </a>
-{% endwith %}
+        <div class = "person__surname__information">Unit price:</div>
+        <div class = "surname">{{item.price}}</div>
 				<div class = "person__surname__information">Price:</div>
-				<div class = "surname">{{item.price}}</div>
+				<div class = "surname">{{item.total_price}}</div>
 			</div>
 
 	<div class = "date__information">
 		<div class = "date__start__information">Quantity:</div>
-		<div class = "start__date">{{item.quantity}}</div>
+    <div class = "surname">{{item.quantity}}</div>
+    <form action="{% url 'add' product.id %}" method="post">
+    <select name="quantity" id="id_quantity">
+        <option value="1">1</option>
+
+        <option value="2">2</option>
+
+        <option value="3">3</option>
+
+        <option value="4">4</option>
+
+        <option value="5">5</option>
+
+        <option value="6">6</option>
+
+        <option value="7">7</option>
+
+        <option value="8">8</option>
+
+        <option value="9">9</option>
+
+        <option value="10">10</option>
+
+        <option value="11">11</option>
+
+        <option value="12">12</option>
+
+        <option value="13">13</option>
+
+        <option value="14">14</option>
+
+        <option value="15">15</option>
+
+        <option value="16">16</option>
+
+        <option value="17">17</option>
+
+        <option value="18">18</option>
+
+        <option value="19">19</option>
+
+      </select><input type="hidden" name="update" value="True" id="id_update">
+  <input type="submit" value="Update">
+  {% csrf_token %}
+</form>
+{% endwith %}
 		<div class = "finish__date"></div>
 	</div>
 	</div>

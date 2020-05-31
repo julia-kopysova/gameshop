@@ -4,6 +4,22 @@ from django.views.decorators.http import require_POST
 from main.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+import logging, logging.config
+import sys
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        }
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO'
+    }
+    }
+logging.config.dictConfig(LOGGING)
 
 @require_POST
 def cart_add(request, id):
@@ -31,4 +47,7 @@ def remove_all_cart(request):
 
 def cart_display(request):
     cart = Cart(request)
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+        logging.info(item['update_quantity_form'])
     return render(request,'basket.html', {'cart': cart})
