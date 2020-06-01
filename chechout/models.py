@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from main.models import Product
 from phone_field import PhoneField
-from address.models import AddressField
+
 # Create your models here.
 class Delivery(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     phone = PhoneField(blank=True, help_text='Contact phone number')
-    address =  AddressField(blank=True, null=True)
+    address_devivery = models.CharField(max_length=200)
     recall = models.BooleanField(default=True)
 
 class Order(models.Model):

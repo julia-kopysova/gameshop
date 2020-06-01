@@ -24,12 +24,13 @@ logging.config.dictConfig(LOGGING)
 
 def create_order(request):
     form = DeliveryForm(request.POST)
+    logging.info(form)
     user = request.user
     cart = Cart(request)
     if request.method == 'POST':
         if form.is_valid():
             cd = form.cleaned_data
-            delivery = Delivery(user = user,  recall = cd['recall'])
+            delivery = Delivery(user = user,  recall = cd['recall'], address_devivery = cd['address'], phone = cd['phone'])
             delivery.save()
             total_price = cart.get_total_price()
             o = Order(user = user, delivery = delivery )
