@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'cart',
+    'phone_field',
+    'address',
     'chechout',
     'account'
 ]
@@ -86,7 +88,7 @@ DATABASES = {
         # port number.
         'PORT': '3306',
         # database name.
-        'NAME': 'gameshop1',
+        'NAME': 'games',
         # user name.
         'USER': 'root',
         # password
@@ -131,7 +133,7 @@ USE_L10N = True
 USE_TZ = True
 LOGIN_REDIRECT_URL = '/'
 
-
+GOOGLE_API_KEY = 'AIzaSyD--your-google-maps-key-SjQBE'
 CART_SESSION_ID = 'cart'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

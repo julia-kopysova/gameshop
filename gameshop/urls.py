@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from main import views, urls
 from cart import urls
+from chechout import urls
 
 urlpatterns = [
     path('', include('main.urls')),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('accounts/', include('account.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('cart/', include('cart.urls')),
+    path('order/', include('chechout.urls')),
 ]
